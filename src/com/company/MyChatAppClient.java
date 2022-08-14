@@ -74,9 +74,25 @@ public class MyChatAppClient extends JFrame implements ActionListener {
         String servername = "localhost";
         try{
 
+            //
+            new MyChatAppClient(name, servername);
+
+
         }catch (Exception exception){
 
         }
     }
-    class MessagesThread
+    class MessagesThread extends Thread {
+        public void run(){
+            String line;
+            try{
+                while (true){
+                    line = br.readLine();
+                    taMessages.append(line + "\n");
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
