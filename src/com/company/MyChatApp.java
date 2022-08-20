@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.Vector;
 import static java.lang.System.out;
 
+
+//Server Side
 public class MyChatApp {
 
     //define users as vectors
@@ -20,7 +22,7 @@ public class MyChatApp {
     public void process() throws Exception {
         //
         ServerSocket server = new ServerSocket(9999, 10); //
-        out.print("Server Started");
+        out.print("Server Started: ");
         while(true){
             Socket client = server.accept();//
             HandleClient c = new HandleClient(client);
@@ -36,9 +38,9 @@ public class MyChatApp {
     }
 
     public void broadcast(String user, String message){
-        // send mesage to all users
+        // send message to all users
         for (HandleClient c : clients){ // :
-            if(!c.getUsername().equals(user)){ //equeal(user)
+            if(! c.getUsername().equals(user)){ //equal(user)
                 c.sendMessage(user, message);
             }
         }
@@ -56,7 +58,7 @@ public class MyChatApp {
             users.add(name);
             start();
         }
-        //method for sendmessage
+        //method for sendMessage
         public void sendMessage(String uname, String msg){ //parameter
             output.println(uname + " - " + msg);
         }

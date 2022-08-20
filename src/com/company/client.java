@@ -1,4 +1,5 @@
 package com.company;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,10 +9,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.EventObject;
+import static java.lang.System.out; //
 
-
-public class MyChatAppClient extends JFrame implements ActionListener {
+//Client side
+public class client extends JFrame implements ActionListener {
     //define
     String username;
     PrintWriter pw;
@@ -22,7 +23,7 @@ public class MyChatAppClient extends JFrame implements ActionListener {
     Socket client;
 
     //title , frame, name
-    public MyChatAppClient(String username, String serverName) throws IOException {
+    public client(String username, String serverName) throws IOException {
         super(username);
         this.username = username;
         client = new Socket(serverName, 9999);
@@ -30,6 +31,7 @@ public class MyChatAppClient extends JFrame implements ActionListener {
         pw = new PrintWriter(client.getOutputStream(), true);
         pw.println(username);
         buildInterface();//call the interface
+        new MessagesThread().start(); //
     }
 
     // Interface method
@@ -41,7 +43,7 @@ public class MyChatAppClient extends JFrame implements ActionListener {
         taMessages.setColumns(50);
         taMessages.setEditable(false);
         tfInput = new JTextField(50);
-        JScrollPane sp = new JScrollPane(taMessages, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane sp = new JScrollPane(taMessages, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(sp, "Center");
         JPanel bp = new JPanel(new FlowLayout());
@@ -75,11 +77,11 @@ public class MyChatAppClient extends JFrame implements ActionListener {
         try{
 
             //
-            new MyChatAppClient(name, servername);
+            new client(name, servername);
 
 
         }catch (Exception exception){
-
+            out.print("Error: -> " + exception.getMessage());
         }
     }
     class MessagesThread extends Thread {
